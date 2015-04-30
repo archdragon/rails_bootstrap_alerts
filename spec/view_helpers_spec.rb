@@ -6,9 +6,16 @@ end
 
 describe RailsBootstrapAlerts::ViewHelpers do
   describe '#flash_class' do
-    it 'Returns a translated class name' do
-      class_name = ViewHelpersTester.flash_class('notice')
-      expect(class_name).to eq('alert alert-info')
+    context 'With recognized flash message names' do
+      before do
+        @alert_names = ['notice', 'success', 'error', 'alert']
+      end
+      it 'Returns a class name' do
+        @alert_names.each do |alert_name|
+          class_name = ViewHelpersTester.flash_class(alert_name)
+          expect(class_name.length).to be > 1
+        end
+      end
     end
     context 'With unrecognized flash message name' do
       it 'returns an empty string' do
